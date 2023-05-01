@@ -28,8 +28,8 @@ const router = createBrowserRouter([
                 element: <Register></Register>
             },
             {
-                path:'/terms',
-                element:<Terms></Terms>
+                path: '/terms',
+                element: <Terms></Terms>
             }
         ]
     },
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
             {
                 path: ':id',
                 element: <Category></Category>,
-                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
+                loader: ({ params }) => fetch(`https://the-news-dragon-server-yasin2514.vercel.app/categories/${params.id}`)
             }
         ],
     },
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             {
                 path: ':id',
                 element: <PrivateRoutes><News></News></PrivateRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/news/${params.id}`)
+                loader: ({ params }) => fetch(`https://the-news-dragon-server-yasin2514.vercel.app/news/${params.id}`)
 
             }
         ]
