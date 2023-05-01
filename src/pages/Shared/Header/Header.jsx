@@ -1,7 +1,6 @@
-import React from 'react';
 import logo from '../../../assets/logo.png'
 import moment from 'moment';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import Marquee from "react-fast-marquee";
 
 const Header = () => {
@@ -18,27 +17,6 @@ const Header = () => {
                     I can be a React component, multiple React components, or just some text.news this is a braking.
                 </Marquee>
             </div>
-
-            {/* navbar */}
-
-            <Navbar collapseOnSelect expand="lg" bg="" variant="light" className='my-4'>
-                <Container>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="mx-auto">
-                            <Nav.Link href="#features">Home</Nav.Link>
-                            <Nav.Link href="#pricing">About</Nav.Link>
-                            <Nav.Link href="#career">Career</Nav.Link>
-                        </Nav>
-                        <Nav className='d-flex align-items-center'>
-                            <Nav.Link href="#deets">Profile</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
-                                <Button variant="dark">Login</Button>
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
         </Container>
     );
 };
