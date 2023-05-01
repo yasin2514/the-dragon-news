@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
-import { FaUserCircle } from 'react-icons/fa';
+import { Button, Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 
 
 const NavigationBar = () => {
     const { user, logOut } = useContext(AuthContext);
+    console.log(user)
 
     const handleLogOUt = () => {
         logOut()
-            .then(result => console.log(result))
+            .then()
             .catch(error => console.log(error))
     }
 
@@ -28,8 +28,10 @@ const NavigationBar = () => {
                         <Nav className='d-flex align-items-center gap-2'>
                             {
                                 user &&
-
-                                <FaUserCircle style={{ fontSize: "2rem" }}></FaUserCircle>
+                                <Image style={{
+                                    width: "40px",
+                                    height: "40px"
+                                }} alt={user?.displayName} src={user?.photoURL} title={user?.displayName} roundedCircle />
 
                             }
                             {

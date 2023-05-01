@@ -2,12 +2,15 @@ import React, { useContext, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import { updateProfile } from 'firebase/auth';
 
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [accepted, setAccepted] = useState(false);
+
 
     const handleRegister = event => {
         event.preventDefault();
@@ -23,13 +26,25 @@ const Register = () => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
                 setSuccess('User Created Successfully');
+                UserUpdateProfile(loggedUser, name, photo)
                 form.reset();
             })
             .catch(error => {
                 setError(error.message);
             })
+    };
 
+    const UserUpdateProfile = (currentUser, displayName, photoURL) => {
+        updateProfile(currentUser, {
+            displayName,
+            photoURL,
+        })
+    };
+
+    const handleTermsCondition = event => {
+        setAccepted(event.target.checked)
     }
+
     return (
         <Container className='w-25 mx-auto'>
             <h3>Please Register </h3>
@@ -54,9 +69,11 @@ const Register = () => {
                     <Form.Control type="password" placeholder="Password" name='password' required />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" name='accept' label="Accept Term & Conditions" />
+                    <Form.Check onClick={handleTermsCondition}
+                        type="checkbox" name='accept' label={<>Accept <Link to={'/terms'}>Term & Conditions</Link></>} />
                 </Form.Group>
-                <Button variant="dark" type="submit">
+                <Button variant="dark" type="submit"
+                    disabled={!accepted}>
                     Register
                 </Button>
                 <div>
