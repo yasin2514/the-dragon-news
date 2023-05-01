@@ -34,7 +34,9 @@ const NewsCard = ({ news }) => {
             </Card.Body>
             <Card.Footer className="text-muted d-flex align-items-center">
                 <div className='flex-grow-1 d-flex align-items-center gap-2'>
-                    <Rating style={{ maxWidth: 250 }} value={rating} readOnly />
+                    <Rating
+                        style={{ maxWidth: 120 }}
+                        value={Math.round(rating?.number || 0)} readOnly />
                     <span>{rating?.number}</span>
                 </div>
                 <div className='d-flex align-items-center gap-2'>
