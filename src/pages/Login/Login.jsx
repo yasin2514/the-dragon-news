@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
+    const { signIn } = useContext(AuthContext);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleLogin = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        setError('');
+        setSuccess('');
+        signIn(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setSuccess('Login Successfully');
+                form.reset();
+            })
+            .catch(error => {
+                setError(error.message);
+            })
+
+    }
     return (
         <Container className='w-25 mx-auto'>
             <h3>Please Login </h3>
-            <Form>
+            <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name='email' required />
@@ -26,11 +50,11 @@ const Login = () => {
                     </Form.Text>
                     <br />
                     <Form.Text className="text-success">
-                        We'll never share your email with anyone else.
+                        {success}
                     </Form.Text>
                     <br />
                     <Form.Text className="text-danger">
-                        We'll never share your email with anyone else.
+                        {error}
                     </Form.Text>
                 </div>
             </Form>

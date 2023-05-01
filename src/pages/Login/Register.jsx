@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
 
 const Register = () => {
+    const { createUser } = useContext(AuthContext);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleRegister = event => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const photo = form.photo.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        setError('');
+        setSuccess('');
+        createUser(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setSuccess('User Created Successfully');
+                form.reset();
+            })
+            .catch(error => {
+                setError(error.message);
+            })
+
+    }
     return (
         <Container className='w-25 mx-auto'>
             <h3>Please Register </h3>
-            <Form>
+            <Form onSubmit={handleRegister}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label>Your Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter name" name='name' required />
@@ -39,11 +65,11 @@ const Register = () => {
                     </Form.Text>
                     <br />
                     <Form.Text className="text-success">
-                        We'll never share your email with anyone else.
+                        {success}
                     </Form.Text>
                     <br />
                     <Form.Text className="text-danger">
-                        We'll never share your email with anyone else.
+                        {error}
                     </Form.Text>
                 </div>
             </Form>
